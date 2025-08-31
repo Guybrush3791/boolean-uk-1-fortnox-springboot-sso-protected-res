@@ -1,4 +1,9 @@
 # SSO Protected Resource
+
+## Repository
+
+https://github.com/Guybrush3791/boolean-uk-1-fortnox-springboot-sso-protected-res.git
+
 ## Learning Objectives
 
 - *SSO auth* through self-hosted *Keycloak*
