@@ -1,0 +1,213 @@
+openapi: 3.1.0
+
+info:
+  title: Exam API
+  description: API for managing exams
+  version: 1.0.0
+  contact:
+    name: Student Management System
+
+servers:
+  - url: http://localhost:4000
+
+tags:
+  - name: exams
+
+paths:
+  /api/public/exam:
+    get:
+      tags:
+        - exams
+      summary: Get all exams
+      description: Get all exams in the system
+      operationId: getAllExams
+      responses:
+        '200':
+          description: Successfully retrieved all exams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllExams'
+
+  /api/public/exam/{id}:
+    get:
+      tags:
+        - exams
+      summary: Get exam by ID
+      description: Get a specific exam by its ID
+      operationId: getExamById
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the exam to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved the exam
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+        '404':
+          description: "No exam with that ID was found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+
+  /api/exam:
+    post:
+      tags:
+        - exams
+      summary: Create exam
+      description: Create a new exam
+      operationId: createExam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExam'
+      responses:
+        '201':
+          description: Successfully created a new exam
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+        '400':
+          description: "Could not create exam, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+
+  /api/exam/{id}:
+    put:
+      tags:
+        - exams
+      summary: Update exam
+      description: Update an existing exam
+      operationId: updateExam
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the exam to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExam'
+      responses:
+        '201':
+          description: Successfully updated the exam
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+        '400':
+          description: "Could not update the exam, please check all required fields are correct."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '404':
+          description: "No exam with that ID was found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+
+    delete:
+      tags:
+        - exams
+      summary: Delete exam
+      description: Delete an exam by ID
+      operationId: deleteExam
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the exam to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully deleted the exam
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exam'
+        '404':
+          description: "No exam with that ID was found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+
+components:
+  schemas:
+    CreateExam:
+      type: object
+      required: [name, ects, grade, date, student_id]
+      properties:
+        name:
+          type: string
+          example: "Algebra I"
+        ects:
+          type: integer
+          example: 6
+        grade:
+          type: integer
+          example: 1
+        date:
+          type: date
+          example: "2025-06-30"
+        student_id:
+          type: integer
+          example: 1
+
+    Exam:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Algebra I"
+        ects:
+          type: integer
+          example: 6
+        grade:
+          type: integer
+          example: 1
+        date:
+          type: date
+          example: "2025-06-30"
+        student_id:
+          type: integer
+          example: 1
+
+    AllExams:
+      type: array
+      items:
+        $ref: '#/components/schemas/Exam'
+
+    Error400:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "bad request"
+
+    Error404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "not found"
