@@ -82,67 +82,7 @@ erDiagram
     Student ||--o{ Exam : ""
 ```
 
-| Exams |         |             |
-| ----- | ------- | ----------- |
-| id    | SERIAL  | PRIMARY KEY |
-| name  | TEXT    |             |
-| ects  | Integer |             |
-| grade | Integer |             |
-| date  | Date    |             |
-
-#### Routes
-The [[doc/index-extension.html|Extension]] spec is in the usual `doc` folder, hire a resume
-
-| Method     | Endpoint                 | Description                                   |
-| :--------- | :----------------------- | :-------------------------------------------- |
-| **GET**    | `/api/public/exams`      | get all exams                                 |
-| **GET**    | `/api/public/exams/{id}` | get exams by id                               |
-| **POST**   | `/api/exams`             | create exams (dto without id as request body) |
-| **PUT**    | `/api/exams/{id}`        | update exams (dto without id as request body) |
-| **DELETE** | `/api/exams/{id}`        | delete exams by id                            |
-
-#### Authentication
-As in the morning lesson, get protection over all *non-public* resources, so only authenticated user can perform *write* actions
-
-##### Public
-
-| Method  | Endpoint                 | Description     |
-| :------ | :----------------------- | :-------------- |
-| **GET** | `/api/public/exams`      | get all exams   |
-| **GET** | `/api/public/exams/{id}` | get exams by id |
-
-##### Protected
-
-| Method     | Endpoint          | Description                                   |
-| :--------- | :---------------- | :-------------------------------------------- |
-| **POST**   | `/api/exams`      | create exams (dto without id as request body) |
-| **PUT**    | `/api/exams/{id}` | update exams (dto without id as request body) |
-| **DELETE** | `/api/exams/{id}` | delete exams by id                            |
-
-#### Note
-- make sure you are a new completely new *realm* in order to test the whole process, from Keycloak configuration to *SpringBoot* project develop
-
-### Extension
-Implement a related table `exams` following this diagram
-
-```mermaid
-erDiagram
-    Student {
-        integer id
-        string first_name
-        string last_name
-        string email
-        boolean retired
-    }
-    Exam {
-        integer id
-        string name
-        integer ects
-        integer grade
-        date date
-    }
-    Student ||--o{ Exam : ""
-```
+Following `Exams` table design
 
 | Exams |         |             |
 | ----- | ------- | ----------- |
