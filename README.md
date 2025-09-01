@@ -1,6 +1,7 @@
 # SSO Protected Resource
 
 ## Repository
+
 https://github.com/Guybrush3791/boolean-uk-1-fortnox-springboot-sso-protected-res.git
 
 ## Learning Objectives
@@ -28,7 +29,7 @@ Implement a new project in realm of `booleanuk-application` with following *Stud
 | retired    | BOOLEAN |             |
 
 #### Routes
-Follow the spec you can find in the usual folder`docs` and implement all the routes defined
+The [[doc/index-core.html|Core]] spec is in the usual `doc` folder, hire a resume
 
 | Method     | Endpoint                   | Description                                     |
 | :--------- | :------------------------- | :---------------------------------------------- |
@@ -43,19 +44,18 @@ As in the morning lesson, get protection over all *non-public* resources, so onl
 
 ##### Public
 
-| Method  | Endpoint                   | Description       |
-| :------ | :------------------------- | :---------------- |
-| **GET** | `/api/public/student`      | get all students  |
-| **GET** | `/api/public/student/{id}` | get student by id |
-|         |                            |                   |
+| Method     | Endpoint                   | Description                                     |
+| :--------- | :------------------------- | :---------------------------------------------- |
+| **GET**    | `/api/public/student`      | get all students                                |
+| **GET**    | `/api/public/student/{id}` | get student by id                               |
 
 ##### Protected
 
-| Method     | Endpoint            | Description                                     |
-| :--------- | :------------------ | :---------------------------------------------- |
-| **POST**   | `/api/student`      | create student (dto without id as request body) |
-| **PUT**    | `/api/student/{id}` | update student (dto without id as request body) |
-| **DELETE** | `/api/student/{id}` | delete student by id                            |
+| Method     | Endpoint                   | Description                                     |
+| :--------- | :------------------------- | :---------------------------------------------- |
+| **POST**   | `/api/student`             | create student (dto without id as request body) |
+| **PUT**    | `/api/student/{id}`        | update student (dto without id as request body) |
+| **DELETE** | `/api/student/{id}`        | delete student by id                            |
 
 #### Note
 - make sure you are a new completely new *realm* in order to test the whole process, from Keycloak configuration to *SpringBoot* project develop
