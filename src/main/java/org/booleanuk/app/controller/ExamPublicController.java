@@ -19,16 +19,16 @@ public class ExamPublicController {
     private ExamService examService;
 
     @GetMapping
-    public List<ExamDto> getAll() {
+    public List<ExamDto.ExamResponseDto> getAll() {
         return examService.getAll().stream()
-                .map(ExamDto::new)
+                .map(ExamDto.ExamResponseDto::new)
                 .toList();
     }
     @GetMapping("{id}")
-    public ResponseEntity<Exam> getById(@PathVariable int id) {
+    public ResponseEntity<ExamDto.ExamResponseDto> getById(@PathVariable int id) {
         Exam exam = examService.getById(id);
-             return   exam != null ?
-                ResponseEntity.ok(exam):
+        return   exam != null ?
+                ResponseEntity.ok(new ExamDto.ExamResponseDto(exam)):
                 ResponseEntity.notFound().build();
     }
 }

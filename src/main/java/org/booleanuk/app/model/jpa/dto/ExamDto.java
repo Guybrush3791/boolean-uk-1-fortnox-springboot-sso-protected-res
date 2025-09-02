@@ -10,26 +10,68 @@ import org.booleanuk.app.model.jpa.pojo.Student;
 
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class ExamDto {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CreateExamDto {
 
-public class ExamDto{
+        private String name;
+        private int ects;
+        private int grade;
+        private LocalDate date;
+        private int studentId;
+    }
 
-    private int id;
-    private String name;
-    private int ects;
-    private int grade;
-    private LocalDate date;
-    private Student student;
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UpdateExamDto {
 
-    public ExamDto(Exam exam) {
-        setId(exam.getId());
-        setName(exam.getName());
-        setEcts(exam.getEcts());
-        setGrade(exam.getGrade());
-        setDate(exam.getDate());
-        setStudent(exam.getStudent());
+        private String name;
+        private int ects;
+        private int grade;
+        private LocalDate date;
+
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ExamResponseDto {
+        private int id;
+        private String name;
+        private int ects;
+        private int grade;
+        private LocalDate date;
+        private StudentSummaryDto student; // Controlled student data
+
+        public ExamResponseDto(Exam exam) {
+            setId(exam.getId());
+            setName(exam.getName());
+            setEcts(exam.getEcts());
+            setGrade(exam.getGrade());
+            setDate(exam.getDate());
+            setStudent(new StudentSummaryDto(exam.getStudent()));
+
+        }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class StudentSummaryDto {
+        private int id;
+        private String firstName;
+        private String lastName;
+
+        public StudentSummaryDto(Student student) {
+            this.id = student.getId();
+            this.firstName = student.getFirstName();
+            this.lastName = student.getLastName();
+            // Notice: No email, no retired status, no exams list
+            // Only what's needed for exam context
+        }
+
+        }
     }
 }

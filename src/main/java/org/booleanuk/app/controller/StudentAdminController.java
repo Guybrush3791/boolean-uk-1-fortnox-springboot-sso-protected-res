@@ -1,6 +1,8 @@
 package org.booleanuk.app.controller;
 
+import org.booleanuk.app.model.jpa.dto.ExamDto;
 import org.booleanuk.app.model.jpa.dto.StudentDto;
+import org.booleanuk.app.model.jpa.pojo.Exam;
 import org.booleanuk.app.model.jpa.pojo.Student;
 import org.booleanuk.app.model.jpa.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,46 +19,38 @@ public class StudentAdminController {
     private StudentService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAll();
+    public List<StudentDto.StudentResponseDto> getAll() {
+        return studentService.getAll().stream()
+                .map(StudentDto.StudentResponseDto::new)
+                .toList();
     }
-
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable int id) {
+    public ResponseEntity<StudentDto.StudentResponseDto> getById(@PathVariable int id) {
         Student student = studentService.getById(id);
-        return student != null ?
-                ResponseEntity.ok(student):
+        return   student != null ?
+                ResponseEntity.ok(new StudentDto.StudentResponseDto(student)):
                 ResponseEntity.notFound().build();
-
     }
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody StudentDto studentDto) {
-        Student student = new Student(studentDto);
-        System.out.println(studentDto);
-        studentService.save(student);
-        System.out.println(student.getFirstName()+student.getLastName()+student.getEmail()+student.isRetired());
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    public ResponseEntity<StudentDto.StudentResponseDto> createExam(
+            @RequestBody StudentDto.CreateStudentDto createStudent) {
+        Student student = studentService.save(createStudent);
+        return new ResponseEntity<>(new StudentDto.StudentResponseDto(student),HttpStatus.CREATED);
     }
     @PutMapping("{id}")
-    public ResponseEntity<Student> updateStudent(
-            @RequestBody StudentDto studentDto, @PathVariable int id) {
-        Student student = studentService.getById(id);
+    public ResponseEntity<StudentDto.StudentResponseDto> updateExam(
+            @PathVariable int id, @RequestBody StudentDto.UpdateStudentDto updateStudent) {
+        Student student = studentService.updateStudent(id, updateStudent);
         if(student != null) {
-            student.setFirstName(studentDto.getFirstName());
-            student.setLastName(studentDto.getLastName());
-            student.setEmail(studentDto.getEmail());
-            student.setRetired(studentDto.isRetired());
-            return ResponseEntity.ok(student);
+            return ResponseEntity.ok(new StudentDto.StudentResponseDto(student));
         }
         return ResponseEntity.notFound().build();
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable int id) {
-        Student student = studentService.getById(id);
-        if (student != null) {
-            studentService.delete(student);
-            return ResponseEntity.ok(student);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Student> deleteExam(@PathVariable int id) {
+        Student student = studentService.delete(id);
+        return student != null ?
+                ResponseEntity.ok(student):
+                ResponseEntity.notFound().build();
     }
 }

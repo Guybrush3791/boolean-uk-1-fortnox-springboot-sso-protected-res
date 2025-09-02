@@ -29,18 +29,9 @@ public class Student {
     private String email;
     @Column(name = "retired")
     private boolean retired;
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Exam> exams;
 
-    public Student (StudentDto studentDto) {
-        setFirstName(studentDto.getFirstName());
-        setLastName(studentDto.getLastName());
-        setEmail(studentDto.getEmail());
-        setRetired(studentDto.isRetired());
-        setExams(studentDto.getExams());
 
-
-
-    }
 }
