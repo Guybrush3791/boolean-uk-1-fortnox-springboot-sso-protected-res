@@ -18,14 +18,7 @@ public class StudentAdminController {
 
     @PostMapping
     public ResponseEntity<?> createStudent(@RequestBody StudentDto dto) {
-        Student s = new Student(
-                dto.getFirst_name(),
-                dto.getLast_name(),
-                dto.getEmail(),
-                dto.isRetired()
-        );
-
-        return ResponseEntity.ok(service.addStudent(s));
+        return ResponseEntity.ok(service.addStudent(dto));
     }
 
     @PutMapping("/{id}")

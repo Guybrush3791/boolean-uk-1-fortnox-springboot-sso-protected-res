@@ -21,12 +21,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getASingleStudent(@PathVariable int id) {
-        Student s = service.getSingleStudent(id);
-
-        if (s != null)
-            return ResponseEntity.ok(s);
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Could not find student.");
+        return ResponseEntity.ok(service.getSingleStudent(id));
     }
 
 }
